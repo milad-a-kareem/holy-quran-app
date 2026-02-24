@@ -11,7 +11,7 @@ export default function App() {
   return (
     <ThemeProvider defaultTheme="light">
       <TooltipProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
           <Routes>
             <Route element={<RootLayout />}>
               <Route index element={<HomePage />} />
