@@ -3,7 +3,7 @@ import { ThemeProviderContext } from "./theme-context";
 
 type Theme = "dark" | "light" | "system";
 
-const STORAGE_KEY = "holly-quran-theme";
+const STORAGE_KEY = "holy-quran-theme";
 
 export function ThemeProvider({
   children,

@@ -5,13 +5,13 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-  Holly Quran App - Custom Theme
+  Holy Quran App - Custom Theme
   Primary: Deep Islamic Green
   Accent: Gold (traditional Quran ornamentation)
   Arabic font stack included for Quranic text rendering
 */
 
-@theme inline {
+@theme {
   --color-background: hsl(40 33% 98%);
   --color-foreground: hsl(222.2 84% 4.9%);
   --color-card: hsl(0 0% 100%);
