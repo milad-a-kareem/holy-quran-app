@@ -6,7 +6,7 @@ export function Footer() {
           بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
         </p>
         <p>
-          Holly Quran &mdash; Read, listen, and reflect upon the words of Allah.
+          Holy Quran &mdash; Read, listen, and reflect upon the words of Allah.
         </p>
       </div>
     </footer>

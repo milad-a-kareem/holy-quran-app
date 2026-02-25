@@ -1,4 +1,4 @@
-# Holly Quran - Project Guide
+# Holy Quran - Project Guide
 
 ## Project Overview
 
