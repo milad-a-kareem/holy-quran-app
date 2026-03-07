@@ -18,14 +18,9 @@ export function Header() {
           <div className="flex h-9 w-9 items-center justify-center">
             <QuranLogo className="h-9 w-9 text-primary" />
           </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-semibold leading-tight tracking-tight">
-              Holy Quran
-            </span>
-            <span className="font-arabic text-xs text-muted-foreground leading-tight">
-              القرآن الكريم
-            </span>
-          </div>
+          <span className="font-arabic text-lg font-semibold text-primary" dir="rtl" lang="ar">
+            القرآن الكريم
+          </span>
         </Link>
 
         <nav className="flex items-center gap-2">
