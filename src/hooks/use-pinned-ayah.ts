@@ -9,14 +9,21 @@ export interface PinnedAyah {
   surahName: string;
 }
 
+// Cache the parsed value so useSyncExternalStore gets a stable reference
+let cachedRaw: string | null = null;
+let cachedValue: PinnedAyah | null = null;
+
 function getSnapshot(): PinnedAyah | null {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw) as PinnedAyah;
-  } catch {
-    return null;
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (raw !== cachedRaw) {
+    cachedRaw = raw;
+    try {
+      cachedValue = raw ? (JSON.parse(raw) as PinnedAyah) : null;
+    } catch {
+      cachedValue = null;
+    }
   }
+  return cachedValue;
 }
 
 function getServerSnapshot(): PinnedAyah | null {

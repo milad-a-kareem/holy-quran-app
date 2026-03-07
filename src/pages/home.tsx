@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { usePinnedAyah } from "@/hooks/use-pinned-ayah";
+import { getPinnedAyah } from "@/hooks/use-pinned-ayah";
 
 const features = [
   {
@@ -31,15 +31,15 @@ const features = [
 ];
 
 export function HomePage() {
-  const { pinnedAyah } = usePinnedAyah();
   const navigate = useNavigate();
 
-  // Auto-navigate to pinned ayah on visit
+  // Auto-navigate to pinned ayah on first visit (read once, no subscription)
   useEffect(() => {
-    if (pinnedAyah) {
-      navigate(`/surah/${pinnedAyah.surahNumber}`, { replace: true });
+    const pinned = getPinnedAyah();
+    if (pinned) {
+      navigate(`/surah/${pinned.surahNumber}`, { replace: true });
     }
-  }, [pinnedAyah, navigate]);
+  }, [navigate]);
 
   return (
     <div className="flex flex-col">
