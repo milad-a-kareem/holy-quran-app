@@ -68,8 +68,9 @@ export function parseTajweedMarkup(raw: string): string {
       }
     }
 
-    // Regular character — collect plain text run
+    // Regular character or unrecognised '[' — collect plain text run
     const start = i;
+    i++; // always advance at least one character to avoid infinite loops
     while (i < raw.length && raw[i] !== "[") {
       i++;
     }
