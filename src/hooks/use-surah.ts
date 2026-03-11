@@ -32,8 +32,9 @@ export function useSurah(number: string | undefined, tajweed = false) {
         // The API includes bismillah in the first ayah's text
         // for all surahs except Al-Fatiha (1) and At-Tawbah (9).
         // Since we display bismillah separately, strip it from the first ayah.
-        // Use regex to handle Unicode variations (e.g. optional tatweel ـ before superscript alef).
-        const bismillahRegex = /^بِسْمِ ٱللَّهِ ٱلرَّحْمَ[ـ]?ٰنِ ٱلرَّحِيمِ\s*/;
+        // Match multiple Unicode variants: sukun (ْ) or small high dotless head (ۡ),
+        // optional tatweel (ـ) before superscript alef (ٰ), and yeh (ي) or Farsi yeh (ی).
+        const bismillahRegex = /^بِسۡ?مِ ٱللَّهِ ٱلرَّحۡ?مَـ?ٰنِ ٱلرَّحِ[يی]مِ\s*/;
         if (surah.number !== 1 && surah.number !== 9 && surah.ayahs.length > 0) {
           const firstAyah = surah.ayahs[0];
           firstAyah.text = firstAyah.text.replace(bismillahRegex, "");
@@ -44,7 +45,27 @@ export function useSurah(number: string | undefined, tajweed = false) {
         if (tajweed && results[1]?.data?.ayahs) {
           tajweedTexts = new Map();
           for (const ayah of results[1].data.ayahs as { numberInSurah: number; text: string }[]) {
-            tajweedTexts.set(ayah.numberInSurah, ayah.text);
+            let text = ayah.text;
+            // Strip bismillah from first ayah's tajweed text too.
+            // The tajweed text contains bracket annotations, so match on the
+            // last word of the bismillah ("لرَّحِيمِ") and strip everything before it.
+            if (
+              ayah.numberInSurah === 1 &&
+              surah.number !== 1 &&
+              surah.number !== 9
+            ) {
+              const marker = "لرَّحِيمِ";
+              const idx = text.indexOf(marker);
+              if (idx !== -1) {
+                let end = idx + marker.length;
+                // Skip closing tajweed brackets and whitespace after the marker
+                while (end < text.length && (text[end] === "]" || /\s/.test(text[end]))) {
+                  end++;
+                }
+                text = text.substring(end);
+              }
+            }
+            tajweedTexts.set(ayah.numberInSurah, text);
           }
         }
 
