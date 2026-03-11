@@ -32,12 +32,11 @@ export function useSurah(number: string | undefined, tajweed = false) {
         // The API includes bismillah in the first ayah's text
         // for all surahs except Al-Fatiha (1) and At-Tawbah (9).
         // Since we display bismillah separately, strip it from the first ayah.
+        // Use regex to handle Unicode variations (e.g. optional tatweel ـ before superscript alef).
+        const bismillahRegex = /^بِسْمِ ٱللَّهِ ٱلرَّحْمَ[ـ]?ٰنِ ٱلرَّحِيمِ\s*/;
         if (surah.number !== 1 && surah.number !== 9 && surah.ayahs.length > 0) {
           const firstAyah = surah.ayahs[0];
-          const bismillah = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ";
-          if (firstAyah.text.startsWith(bismillah)) {
-            firstAyah.text = firstAyah.text.slice(bismillah.length);
-          }
+          firstAyah.text = firstAyah.text.replace(bismillahRegex, "");
         }
 
         let tajweedTexts: Map<number, string> | null = null;
